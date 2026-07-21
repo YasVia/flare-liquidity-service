@@ -4,6 +4,20 @@ import { FLARE_TOKENS } from '../data/tokens'
 
 export const tokenRoutes = new Hono()
 
+
+tokenRoutes.post('/SearchTokens', async (c) => {
+  const body = await c.req.json()
+
+  const query =
+    body.query ??
+    body.searchTerm ??
+    ''
+
+  return c.json({
+    tokens: searchTokens(query),
+  })
+})
+
 tokenRoutes.post('/search', async (c) => {
   const body = await c.req.json()
 
