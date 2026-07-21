@@ -7,6 +7,8 @@ import { initializePoolRoutes } from './routes/initializePool'
 import { mintPositionRoutes } from './routes/mintPosition'
 import { poolStateRoutes } from './routes/poolState'
 import { poolAddressRoutes } from './routes/poolAddress'
+import { positionBuildRoutes } from './routes/positionBuild'
+import { createPositionRoutes } from './routes/createPosition'
 
 const app = new Hono()
 
@@ -23,6 +25,8 @@ app.route('/pool/initialize', initializePoolRoutes)
 app.route('/position/mint', mintPositionRoutes)
 app.route('/pool/state', poolStateRoutes)
 app.route('/pool/address', poolAddressRoutes)
+app.route('/position/build', positionBuildRoutes)
+app.route('/position/create', createPositionRoutes)
 
 serve({
   fetch: app.fetch,
