@@ -7,6 +7,7 @@ import { initializePoolRoutes } from './routes/initializePool'
 import { mintPositionRoutes } from './routes/mintPosition'
 import { poolStateRoutes } from './routes/poolState'
 import { tickRoutes } from './routes/ticks'
+import { approveRoutes } from './routes/approve'
 import { poolAddressRoutes } from './routes/poolAddress'
 import { positionBuildRoutes } from './routes/positionBuild'
 import { createPositionRoutes } from './routes/createPosition'
@@ -28,6 +29,7 @@ app.route('/pool/initialize', initializePoolRoutes)
 app.route('/position/mint', mintPositionRoutes)
 app.route('/pool/state', poolStateRoutes)
 app.route('/pool/ticks', tickRoutes)
+app.route('/position/approve', approveRoutes)
 app.route('/pool/address', poolAddressRoutes)
 app.route('/position/build', positionBuildRoutes)
 app.route('/position/create', createPositionRoutes)
