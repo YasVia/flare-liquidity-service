@@ -7,14 +7,19 @@ export function buildCreatePoolCalldata(
   tokenB: `0x${string}`,
   fee: number,
 ) {
+  const [token0, token1] =
+    tokenA.toLowerCase() < tokenB.toLowerCase()
+      ? [tokenA, tokenB]
+      : [tokenB, tokenA]
+
   return {
     to: FLARE_CONTRACTS.v3CoreFactoryAddress,
     data: encodeFunctionData({
       abi: factoryAbi,
       functionName: 'createPool',
       args: [
-        tokenA,
-        tokenB,
+        token0,
+        token1,
         fee,
       ],
     }),
