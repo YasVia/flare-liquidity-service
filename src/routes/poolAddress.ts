@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { getPoolAddress } from '../services/liquidity'
+import { getPoolAddress } from '../services/poolReader'
 
 export const poolAddressRoutes = new Hono()
 
