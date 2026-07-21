@@ -5,4 +5,6 @@ export const config = {
   flareRpcUrl:
     process.env.FLARE_RPC_URL ||
     'https://rpc.ankr.com/flare',
+
+  privateKey: process.env.PRIVATE_KEY as `0x${string}`,
 } as const
