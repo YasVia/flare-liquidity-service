@@ -9,6 +9,7 @@ import { poolStateRoutes } from './routes/poolState'
 import { poolAddressRoutes } from './routes/poolAddress'
 import { positionBuildRoutes } from './routes/positionBuild'
 import { createPositionRoutes } from './routes/createPosition'
+import { tokenRoutes } from './routes/tokens'
 import { uniswapLiquidityRoutes } from './routes/uniswapLiquidity'
 
 const app = new Hono()
@@ -28,6 +29,7 @@ app.route('/pool/state', poolStateRoutes)
 app.route('/pool/address', poolAddressRoutes)
 app.route('/position/build', positionBuildRoutes)
 app.route('/position/create', createPositionRoutes)
+app.route('/tokens', tokenRoutes)
 app.route('/', uniswapLiquidityRoutes)
 
 serve({
