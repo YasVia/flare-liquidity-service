@@ -15,5 +15,8 @@
     "dotenv": "^17.4.2",
     "hono": "^4.12.31",
     "viem": "^2.55.4"
+  },
+  "scripts": {
+    "start": "bun src/index.ts"
   }
 }
