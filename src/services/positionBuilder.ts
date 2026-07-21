@@ -67,9 +67,6 @@ export function buildMintCalldata(params: {
 }
 
 
-
-
-
 export function buildPosition<T extends object>(params: T): T {
   return params
 }
