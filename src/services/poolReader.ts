@@ -39,13 +39,16 @@ export async function getPoolAddress(
   tokenB: `0x${string}`,
   fee: number,
 ) {
+  const token0 = getAddress(tokenA.toLowerCase() < tokenB.toLowerCase() ? tokenA : tokenB)
+  const token1 = getAddress(tokenA.toLowerCase() < tokenB.toLowerCase() ? tokenB : tokenA)
+
   const pool = await client.readContract({
     address: FLARE_CONTRACTS.v3CoreFactoryAddress,
     abi: factoryAbi,
     functionName: 'getPool',
     args: [
-      getAddress(tokenA),
-      getAddress(tokenB),
+      token0,
+      token1,
       fee,
     ],
   })
