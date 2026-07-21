@@ -1,38 +1,75 @@
-import { Token } from '@uniswap/sdk-core'
-import { Pool, Position } from '@uniswap/v3-sdk'
+import { encodeFunctionData } from 'viem'
+import { FLARE_CONTRACTS } from '../config/contracts'
 
-export function buildPosition(params: {
-  token0: Token
-  token1: Token
+const positionManagerAbi = [
+  {
+    type: 'function',
+    name: 'mint',
+    stateMutability: 'payable',
+    inputs: [
+      {
+        name: 'params',
+        type: 'tuple',
+        components: [
+          { name: 'token0', type: 'address' },
+          { name: 'token1', type: 'address' },
+          { name: 'fee', type: 'uint24' },
+          { name: 'tickLower', type: 'int24' },
+          { name: 'tickUpper', type: 'int24' },
+          { name: 'amount0Desired', type: 'uint256' },
+          { name: 'amount1Desired', type: 'uint256' },
+          { name: 'amount0Min', type: 'uint256' },
+          { name: 'amount1Min', type: 'uint256' },
+          { name: 'recipient', type: 'address' },
+          { name: 'deadline', type: 'uint256' },
+        ],
+      },
+    ],
+    outputs: [
+      { name: 'tokenId', type: 'uint256' },
+      { name: 'liquidity', type: 'uint128' },
+      { name: 'amount0', type: 'uint256' },
+      { name: 'amount1', type: 'uint256' },
+    ],
+  },
+] as const
+
+export function buildMintCalldata(params: {
+  token0: `0x${string}`
+  token1: `0x${string}`
   fee: number
-  sqrtPriceX96: bigint
-  tickCurrent: number
   tickLower: number
   tickUpper: number
-  amount0: bigint
-  amount1: bigint
+  amount0Desired: bigint
+  amount1Desired: bigint
+  recipient: `0x${string}`
+  deadline: bigint
 }) {
-  const pool = new Pool(
-    params.token0,
-    params.token1,
-    params.fee,
-    params.sqrtPriceX96.toString(),
-    0,
-    params.tickCurrent,
-  )
-
-  const position = Position.fromAmounts({
-    pool,
-    tickLower: params.tickLower,
-    tickUpper: params.tickUpper,
-    amount0: params.amount0.toString(),
-    amount1: params.amount1.toString(),
-    useFullPrecision: true,
+  return encodeFunctionData({
+    abi: positionManagerAbi,
+    functionName: 'mint',
+    args: [
+      {
+        token0: params.token0,
+        token1: params.token1,
+        fee: params.fee,
+        tickLower: params.tickLower,
+        tickUpper: params.tickUpper,
+        amount0Desired: params.amount0Desired,
+        amount1Desired: params.amount1Desired,
+        amount0Min: 0n,
+        amount1Min: 0n,
+        recipient: params.recipient,
+        deadline: params.deadline,
+      },
+    ],
   })
+}
 
-  return {
-    liquidity: position.liquidity.toString(),
-    amount0: position.amount0.quotient.toString(),
-    amount1: position.amount1.quotient.toString(),
-  }
+
+
+
+
+export function buildPosition<T extends object>(params: T): T {
+  return params
 }

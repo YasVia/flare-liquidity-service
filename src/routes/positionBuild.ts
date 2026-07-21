@@ -1,46 +1,32 @@
 import { Hono } from 'hono'
-import { Token } from '@uniswap/sdk-core'
-import { buildPosition } from '../services/positionBuilder'
-import { getTickRange } from '../services/tickMath'
+import { buildMintCalldata } from '../services/positionBuilder'
 
 export const positionBuildRoutes = new Hono()
 
 positionBuildRoutes.post('/', async (c) => {
-  const body = await c.req.json()
+  try {
+    const body = await c.req.json()
 
-  const token0 = new Token(
-    14,
-    body.token0,
-    body.token0Decimals,
-    body.token0Symbol,
-  )
+    const calldata = buildMintCalldata({
+      token0: body.token0,
+      token1: body.token1,
+      fee: Number(body.fee),
+      tickLower: Number(body.tickLower),
+      tickUpper: Number(body.tickUpper),
+      amount0Desired: BigInt(body.amount0Desired),
+      amount1Desired: BigInt(body.amount1Desired),
+      recipient: body.recipient,
+      deadline: BigInt(body.deadline),
+    })
 
-  const token1 = new Token(
-    14,
-    body.token1,
-    body.token1Decimals,
-    body.token1Symbol,
-  )
-
-  const range = getTickRange(
-    Number(body.tickCurrent),
-    Number(body.tickSpacing),
-  )
-
-  const result = buildPosition({
-    token0,
-    token1,
-    fee: Number(body.fee),
-    sqrtPriceX96: BigInt(body.sqrtPriceX96),
-    tickCurrent: Number(body.tickCurrent),
-    tickLower: range.tickLower,
-    tickUpper: range.tickUpper,
-    amount0: BigInt(body.amount0),
-    amount1: BigInt(body.amount1),
-  })
-
-  return c.json({
-    ...range,
-    ...result,
-  })
+    return c.json({
+      to: '0xe69b854a30D04c4DDf1ecCB7c30291184154c72D',
+      data: calldata,
+      value: '0',
+    })
+  } catch (error) {
+    return c.json({
+      error: error instanceof Error ? error.message : String(error),
+    }, 500)
+  }
 })
