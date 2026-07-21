@@ -3,6 +3,9 @@ import { getPoolState } from './poolState'
 import { getTickRange } from './tickMath'
 import { buildPosition } from './positionBuilder'
 import { buildMintPositionCalldata } from './mintPosition'
+import { buildCreatePoolCalldata } from './createPool'
+import { buildInitializePoolCalldata } from './initializePool'
+import { priceToSqrtPriceX96 } from './priceMath'
 import { Token } from '@uniswap/sdk-core'
 
 export async function createPosition(params: {
@@ -13,6 +16,7 @@ export async function createPosition(params: {
   token0Symbol: string
   token1Symbol: string
   fee: number
+  initialPrice: number
   amount0: bigint
   amount1: bigint
   recipient: `0x${string}`
@@ -26,12 +30,33 @@ export async function createPosition(params: {
 
   if (pool === '0x0000000000000000000000000000000000000000') {
     return {
-      error: 'POOL_NOT_FOUND',
-      message: 'Create and initialize pool first',
+      status: 'CREATE_POOL_REQUIRED',
+      createPoolTx: buildCreatePoolCalldata(
+        params.token0,
+        params.token1,
+        params.fee,
+      ),
     }
   }
 
   const state = await getPoolState(pool)
+
+  if (state.sqrtPriceX96 === 0n) {
+    const sqrtPriceX96 = priceToSqrtPriceX96(
+      Number(params.initialPrice),
+      params.token0Decimals,
+      params.token1Decimals,
+    )
+
+    return {
+      status: 'INITIALIZE_REQUIRED',
+      pool,
+      initializeTx: buildInitializePoolCalldata(
+        pool,
+        sqrtPriceX96,
+      ),
+    }
+  }
 
   const range = getTickRange(
     state.tick,
