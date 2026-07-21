@@ -1,22 +1,24 @@
 import { Hono } from 'hono'
-import { getPoolState } from '../services/poolState'
+import { getPoolState } from '../services/poolStateReader'
 
 export const poolStateRoutes = new Hono()
 
-poolStateRoutes.post('/', async (c) => {
-  const body = await c.req.json()
-
+poolStateRoutes.get('/:address', async (c) => {
   try {
-    const result = await getPoolState(body.pool)
+    const address = c.req.param('address') as `0x${string}`
 
-    return c.json({
-      sqrtPriceX96: result.sqrtPriceX96.toString(),
-      tick: result.tick,
-      tickSpacing: result.tickSpacing,
-    })
+    const state = await getPoolState(address)
+
+    return c.json(state)
   } catch (error) {
-    return c.json({
-      error: 'Invalid pool address or pool does not exist',
-    }, 400)
+    return c.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : String(error),
+      },
+      500,
+    )
   }
 })
