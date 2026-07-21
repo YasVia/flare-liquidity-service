@@ -15,6 +15,20 @@ tokenRoutes.post('/search', async (c) => {
 })
 
 
+
+tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
+  const body = await c.req.json()
+
+  const query =
+    body.query ??
+    body.searchTerm ??
+    ''
+
+  return c.json({
+    tokens: searchTokens(query),
+  })
+})
+
 tokenRoutes.get('/', (c) => {
   return c.json({
     tokens: FLARE_TOKENS,
