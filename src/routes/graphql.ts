@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { searchTokens } from '../services/tokenSearch'
 
 export const graphqlRoutes = new Hono()
 
@@ -11,28 +12,30 @@ graphqlRoutes.post('/', async (c) => {
     console.log('GRAPHQL', operationName)
 
     switch (operationName) {
-      case 'SearchTokens':
-      case 'Token':
+      case 'SearchTokens': {
+        const query =
+          body.variables?.search ??
+          body.variables?.query ??
+          ''
+
         return c.json({
           data: {
-            tokens: [
-              {
-                address: '0x1D80c49BbBCd1C0911346656B529DF9E5c2F783d',
-                chainId: 14,
-                symbol: 'WFLR',
-                name: 'Wrapped Flare',
-                decimals: 18,
-              },
-              {
-                address: '0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6',
-                chainId: 14,
-                symbol: 'USDC',
-                name: 'USD Coin',
-                decimals: 6,
-              },
-            ],
+            tokens: searchTokens(query),
           },
         })
+      }
+
+      case 'Token': {
+        const address =
+          body.variables?.address ??
+          ''
+
+        return c.json({
+          data: {
+            tokens: searchTokens(address),
+          },
+        })
+      }
 
       case 'PoolPriceHistory':
         return c.json({
