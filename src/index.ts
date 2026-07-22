@@ -21,6 +21,7 @@ import { liquidityCompatRoutes } from './routes/liquidityCompat'
 import { uniswapLiquidityCompatRoutes } from './routes/uniswapLiquidityCompat'
 import { poolCompatRoutes } from './routes/poolCompat'
 import { tickCompatRoutes } from './routes/tickCompat'
+import { positionCompatRoutes } from './routes/positionCompat'
 
 const app = new Hono()
 
@@ -51,6 +52,7 @@ app.route('/uniswap.liquidity.v1.LiquidityService', liquidityCompatRoutes)
 app.route('/uniswap.liquidity.v2.LiquidityService', uniswapLiquidityCompatRoutes)
 app.route('/pool', poolCompatRoutes)
 app.route('/ticks', tickCompatRoutes)
+app.route('/position', positionCompatRoutes)
 
 serve({
   fetch: app.fetch,
