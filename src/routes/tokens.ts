@@ -4,42 +4,45 @@ import { FLARE_TOKENS } from '../data/tokens'
 
 export const tokenRoutes = new Hono()
 
+function result(query: string) {
+  return searchTokens(query)
+}
 
 tokenRoutes.post('/SearchTokens', async (c) => {
   const body = await c.req.json()
 
-  const query =
-    body.query ??
-    body.searchTerm ??
-    ''
+  return c.json({
+    tokens: result(
+      body.query ??
+      body.searchTerm ??
+      ''
+    ),
+  })
+})
+
+tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
+  const body = await c.req.json()
 
   return c.json({
-    tokens: searchTokens(query),
+    tokens: result(
+      body.query ??
+      body.searchTerm ??
+      ''
+    ),
   })
 })
 
 tokenRoutes.post('/search', async (c) => {
   const body = await c.req.json()
 
-  const query = body.query ?? ''
-
   return c.json({
-    tokens: searchTokens(query),
+    tokens: result(body.query ?? ''),
   })
 })
 
-
-
-tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
-  const body = await c.req.json()
-
-  const query =
-    body.query ??
-    body.searchTerm ??
-    ''
-
+tokenRoutes.post('/GetTokens', async (c) => {
   return c.json({
-    tokens: searchTokens(query),
+    tokens: FLARE_TOKENS,
   })
 })
 
