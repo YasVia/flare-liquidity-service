@@ -3,37 +3,49 @@ name: Build Flare Liquidity Service
 on:
   push:
     branches:
-      - build
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
 
       - name: Setup Bun
-        run: |
-          curl -fsSL https://bun.sh/install | bash
-          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
         run: bun install
 
       - name: Typecheck
-        run: bunx tsc --noEmit
+        run: bun run typecheck
 
       - name: Build
-        run: bun build src/index.ts --target=node --outdir=dist
+        run: bun run build
 
-      - name: Commit build output
+      - name: Publish build branch
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          mkdir /tmp/release
 
-          git add dist
+          cp -r dist /tmp/release/
+          cp package.json bun.lock /tmp/release/
 
-          git commit -m "chore(build): generated build output" || exit 0
+          cd /tmp/release
 
-          git push
+          git init
+          git checkout -b build
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "build: production artifact"
+
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+          git push origin build --force
