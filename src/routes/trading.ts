@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { quoteExactInputSingle } from '../services/quote'
 
 export const tradingRoutes = new Hono()
 
@@ -23,5 +24,21 @@ tradingRoutes.post('/check_delegation', async (c) => {
 
   return c.json({
     delegationDetails: result,
+  })
+})
+
+
+tradingRoutes.post('/quote', async (c) => {
+  const body = await c.req.json()
+
+  const result = await quoteExactInputSingle({
+    tokenIn: body.tokenIn,
+    tokenOut: body.tokenOut,
+    amountIn: BigInt(body.amountIn),
+    fee: body.fee,
+  })
+
+  return c.json({
+    quote: result.result,
   })
 })
