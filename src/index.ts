@@ -14,6 +14,7 @@ import { positionBuildRoutes } from './routes/positionBuild'
 import { createPositionRoutes } from './routes/createPosition'
 import { tokenRoutes } from './routes/tokens'
 import { uniswapLiquidityRoutes } from './routes/uniswapLiquidity'
+import { dataApiRoutes } from './routes/dataApi'
 
 const app = new Hono()
 
@@ -37,6 +38,7 @@ app.route('/position/build', positionBuildRoutes)
 app.route('/position/create', createPositionRoutes)
 app.route('/tokens', tokenRoutes)
 app.route('/', uniswapLiquidityRoutes)
+app.route('/data.v1.DataApiService', dataApiRoutes)
 
 serve({
   fetch: app.fetch,
