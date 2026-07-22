@@ -17,6 +17,7 @@ import { uniswapLiquidityRoutes } from './routes/uniswapLiquidity'
 import { dataApiRoutes } from './routes/dataApi'
 import { graphqlRoutes } from './routes/graphql'
 import { tradingRoutes } from './routes/trading'
+import { liquidityCompatRoutes } from './routes/liquidityCompat'
 
 const app = new Hono()
 
@@ -43,6 +44,7 @@ app.route('/', uniswapLiquidityRoutes)
 app.route('/data.v1.DataApiService', dataApiRoutes)
 app.route('/v1/graphql', graphqlRoutes)
 app.route('/wallet', tradingRoutes)
+app.route('/uniswap.liquidity.v1.LiquidityService', liquidityCompatRoutes)
 
 serve({
   fetch: app.fetch,
