@@ -26,6 +26,7 @@ import { approveCompatRoutes } from './routes/approveCompat'
 import { poolActionCompatRoutes } from './routes/poolActionCompat'
 import { multicallCompatRoutes } from './routes/multicallCompat'
 import { poolCreateCompatRoutes } from './routes/poolCreateCompat'
+import { createPositionCompatRoutes } from './routes/createPositionCompat'
 
 const app = new Hono()
 
@@ -61,6 +62,7 @@ app.route('/approve', approveCompatRoutes)
 app.route('/pool-action', poolActionCompatRoutes)
 app.route('/multicall', multicallCompatRoutes)
 app.route('/pool-create', poolCreateCompatRoutes)
+app.route('/create-position', createPositionCompatRoutes)
 
 serve({
   fetch: app.fetch,
