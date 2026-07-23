@@ -16,7 +16,20 @@ graphqlRoutes.post('/', async (c) => {
       })
     }
 
-    const body = JSON.parse(rawBody)
+    let body: any
+
+    try {
+      body = JSON.parse(rawBody)
+    } catch (error) {
+      console.log('GRAPHQL INVALID JSON', {
+        rawBody,
+        error: error instanceof Error ? error.message : error,
+      })
+
+      return c.json({
+        data: {},
+      })
+    }
 
     const operationName = body.operationName ?? ''
     
