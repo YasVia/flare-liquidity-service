@@ -2,23 +2,31 @@ import { Hono } from 'hono'
 
 export const statsigRoutes = new Hono()
 
-const TARGET = 'https://gating.interface.gateway.uniswap.org'
-
 statsigRoutes.all('/*', async (c) => {
   const path = c.req.path.replace(/^\/v1\/statsig-proxy/, '/v1')
-  const url = `${TARGET}${path}${new URL(c.req.url).search}`
 
-  const response = await fetch(url, {
+  console.log('Statsig request:', {
     method: c.req.method,
-    headers: c.req.header(),
-    body:
-      c.req.method === 'GET' || c.req.method === 'HEAD'
-        ? undefined
-        : await c.req.raw.arrayBuffer(),
+    path,
   })
 
-  return new Response(response.body, {
-    status: response.status,
-    headers: response.headers,
+  // Minimal Statsig compatible response
+  if (path.includes('/initialize')) {
+    return c.json({
+      dynamic_configs: {},
+      feature_gates: {},
+      layer_configs: {},
+      time: Date.now(),
+    })
+  }
+
+  if (path.includes('/rgstr')) {
+    return c.json({
+      success: true,
+    })
+  }
+
+  return c.json({
+    success: true,
   })
 })
