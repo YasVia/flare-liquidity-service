@@ -95,6 +95,13 @@ app.route('/pool/address', poolAddressRoutes)
 app.route('/position/build', positionBuildRoutes)
 app.route('/position/create', createPositionRoutes)
 app.route('/tokens', tokenRoutes)
+
+// ConnectRPC compatibility routes
+app.route(
+  '/uniswap.liquidity.v1.LiquidityService',
+  liquidityRoutes,
+)
+
 app.route('/', uniswapLiquidityRoutes)
 app.route('/data.v1.DataApiService', dataApiRoutes)
 app.route('/data.v2.DataApiService', dataApiRoutes)
