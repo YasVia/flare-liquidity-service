@@ -7,8 +7,19 @@ amplitudeRoutes.post('*', async (c) => {
 
   console.log('AMPLITUDE EVENT', body.slice(0, 500))
 
-  return c.json({
-    code: 200,
-    server_upload_time: Date.now(),
-  })
+  return new Response(
+    JSON.stringify({
+      code: 200,
+      server_upload_time: Date.now(),
+      events_ingested: true,
+    }),
+    {
+      status: 200,
+      headers: {
+        'content-type': 'application/json',
+        'access-control-allow-origin': '*',
+        'access-control-allow-credentials': 'true',
+      },
+    },
+  )
 })
