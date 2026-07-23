@@ -36,9 +36,10 @@ rpcRoutes.post('/:chainId', async (c) => {
     return new Response(text, {
       status: response.status,
       headers: {
-        'content-type':
-          response.headers.get('content-type') ??
-          'application/json',
+        'content-type': 'application/json',
+        'access-control-allow-origin': '*',
+        'access-control-allow-headers': '*',
+        'access-control-allow-methods': 'POST, OPTIONS',
       },
     })
   } catch (error) {
