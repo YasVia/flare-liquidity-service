@@ -9,9 +9,11 @@ amplitudeRoutes.post('*', async (c) => {
     'https://interface.gateway.uniswap.org/v1/amplitude-proxy',
     {
       method: 'POST',
-      headers: {
-        'content-type': c.req.header('content-type') ?? 'application/json',
-      },
+      headers: Object.fromEntries(
+        Array.from(c.req.raw.headers.entries()).filter(([key]) =>
+          !['host', 'content-length'].includes(key.toLowerCase())
+        )
+      ),
       body,
     },
   )
