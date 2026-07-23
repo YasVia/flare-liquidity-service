@@ -37,3 +37,15 @@ dataApiRoutes.post('/SearchTokens', async (c) => {
     ),
   })
 })
+
+
+dataApiRoutes.post('/ConvertFiat', async (c) => {
+  const body = await c.req.json()
+
+  console.log('ConvertFiat', body)
+
+  return c.json({
+    convertedAmount: body.amount ?? 0,
+    currency: body.currency ?? 'USD',
+  })
+})
