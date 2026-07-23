@@ -28,6 +28,7 @@ import { poolActionCompatRoutes } from './routes/poolActionCompat'
 import { multicallCompatRoutes } from './routes/multicallCompat'
 import { poolCreateCompatRoutes } from './routes/poolCreateCompat'
 import { createPositionCompatRoutes } from './routes/createPositionCompat'
+import { statsigRoutes } from './routes/statsig'
 import { rpcRoutes } from './routes/rpc'
 import { unitagRoutes } from './routes/unitag'
 import { notificationRoutes } from './routes/notification'
@@ -83,6 +84,7 @@ app.route('/tokens', tokenRoutes)
 app.route('/', uniswapLiquidityRoutes)
 app.route('/data.v1.DataApiService', dataApiRoutes)
 app.route('/v1/graphql', graphqlRoutes)
+app.route('/v1/statsig-proxy', statsigRoutes)
 app.route('/rpc', rpcRoutes)
 app.route(
   '/uniswap.unitag.v1.UnitagService',
