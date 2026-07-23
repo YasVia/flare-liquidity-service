@@ -29,32 +29,12 @@ rpcRoutes.post('/:chainId', async (c) => {
 
     clearTimeout(timeout)
 
-    const text = await response.text()
+    const json = await response.json()
 
     console.log('RPC RESPONSE STATUS', response.status)
-    console.log('RPC RESPONSE BODY LENGTH', text.length)
-    console.log('RPC RESPONSE BODY', text)
+    console.log('RPC RESPONSE JSON', json)
 
-    const responseBody =
-      text ||
-      JSON.stringify({
-        jsonrpc: '2.0',
-        id: null,
-        error: {
-          code: -32000,
-          message: 'empty upstream response',
-        },
-      })
-
-    return new Response(responseBody, {
-      status: response.status,
-      headers: {
-        'content-type': 'application/json',
-        'access-control-allow-origin': '*',
-        'access-control-allow-headers': '*',
-        'access-control-allow-methods': 'POST, OPTIONS',
-      },
-    })
+    return c.json(json, response.status as any)
   } catch (error) {
     console.error('RPC ERROR', error)
 
