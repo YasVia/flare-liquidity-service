@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { config } from './config'
 import { liquidityRoutes } from './routes/liquidity'
 import { createPoolRoutes } from './routes/createPool'
@@ -29,6 +30,25 @@ import { poolCreateCompatRoutes } from './routes/poolCreateCompat'
 import { createPositionCompatRoutes } from './routes/createPositionCompat'
 
 const app = new Hono()
+
+app.use(
+  '*',
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://iranvault.online',
+    ],
+    allowMethods: [
+      'GET',
+      'POST',
+      'OPTIONS',
+    ],
+    allowHeaders: [
+      'Content-Type',
+      'Authorization',
+    ],
+  }),
+)
 
 app.get('/', (c) => {
   return c.json({
