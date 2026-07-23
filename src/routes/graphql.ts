@@ -7,7 +7,16 @@ export const graphqlRoutes = new Hono()
 
 graphqlRoutes.post('/', async (c) => {
   try {
-    const body = await c.req.json()
+    const rawBody = await c.req.text()
+
+    if (!rawBody) {
+      console.log('GRAPHQL EMPTY BODY')
+      return c.json({
+        data: {},
+      })
+    }
+
+    const body = JSON.parse(rawBody)
 
     const operationName = body.operationName ?? ''
     
