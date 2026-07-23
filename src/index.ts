@@ -50,6 +50,8 @@ app.use(
       '_dd-custom-header-graph-ql-operation-type',
       'x-request-source',
       'x-requested-with',
+      'connect-protocol-version',
+      'x-app-version',
     ],
     credentials: true,
   }),
