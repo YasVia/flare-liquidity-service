@@ -1,4 +1,6 @@
 import { serve } from '@hono/node-server'
+import { createServer } from 'node:http'
+import { WebSocketServer } from 'ws'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { config } from './config'
@@ -130,9 +132,39 @@ app.route('/multicall', multicallCompatRoutes)
 app.route('/pool-create', poolCreateCompatRoutes)
 app.route('/create-position', createPositionCompatRoutes)
 
-serve({
-  fetch: app.fetch,
-  port: config.port,
+const server = createServer((req, res) => {
+  app.fetch(
+    new Request(`http://${req.headers.host}${req.url}`, {
+      method: req.method,
+      headers: req.headers as HeadersInit,
+    }),
+  ).then(async (response) => {
+    res.writeHead(response.status, Object.fromEntries(response.headers))
+    res.end(await response.text())
+  })
 })
 
-console.log(`Listening on ${config.port}`)
+const wss = new WebSocketServer({
+  server,
+  path: '/ws',
+})
+
+wss.on('connection', (socket) => {
+  console.log('WEBSOCKET CONNECTED')
+
+  socket.send(JSON.stringify({
+    type: 'connected',
+  }))
+
+  socket.on('message', (message) => {
+    console.log('WS MESSAGE', message.toString())
+  })
+
+  socket.on('close', () => {
+    console.log('WEBSOCKET CLOSED')
+  })
+})
+
+server.listen(config.port, () => {
+  console.log(`Listening on ${config.port}`)
+})
