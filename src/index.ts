@@ -47,6 +47,8 @@ app.use(
       'Content-Type',
       'Authorization',
       '_dd-custom-header-graph-ql-operation-name',
+      '_dd-custom-header-graph-ql-operation-type',
+      'x-request-source',
       'x-requested-with',
     ],
     credentials: true,
