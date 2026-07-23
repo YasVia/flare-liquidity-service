@@ -12,6 +12,8 @@ rpcRoutes.post('/:chainId', async (c) => {
       controller.abort()
     }, 15000)
 
+    console.log('RPC REQUEST', c.req.path, body)
+
     const response = await fetch(
       'https://flare-api.flare.network/ext/C/rpc',
       {
@@ -28,6 +30,8 @@ rpcRoutes.post('/:chainId', async (c) => {
     clearTimeout(timeout)
 
     const text = await response.text()
+
+    console.log('RPC RESPONSE', response.status, text.slice(0, 300))
 
     return new Response(text, {
       status: response.status,
