@@ -2,18 +2,8 @@ import { Hono } from 'hono'
 
 export const rpcRoutes = new Hono()
 
-const RPC_MAP: Record<string, string> = {
-  '1': 'https://flare-api.flare.network/ext/C/rpc',
-}
-
 rpcRoutes.post('/:chainId', async (c) => {
   try {
-    const chainId = c.req.param('chainId')
-
-    const target =
-      RPC_MAP[chainId] ??
-      RPC_MAP['1']
-
     const body = await c.req.text()
 
     const controller = new AbortController()
@@ -22,14 +12,18 @@ rpcRoutes.post('/:chainId', async (c) => {
       controller.abort()
     }, 15000)
 
-    const response = await fetch(target, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
+    const response = await fetch(
+      'https://flare-api.flare.network/ext/C/rpc',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json',
+        },
+        body,
+        signal: controller.signal,
       },
-      body,
-      signal: controller.signal,
-    })
+    )
 
     clearTimeout(timeout)
 
@@ -41,22 +35,24 @@ rpcRoutes.post('/:chainId', async (c) => {
         'content-type':
           response.headers.get('content-type') ??
           'application/json',
-        'access-control-allow-origin': '*',
       },
     })
-
   } catch (error) {
     console.error('RPC ERROR', error)
 
     return c.json(
       {
-        error: 'RPC_FAILED',
-        message:
-          error instanceof Error
-            ? error.message
-            : 'unknown error',
+        jsonrpc: '2.0',
+        error: {
+          code: -32000,
+          message:
+            error instanceof Error
+              ? error.message
+              : 'RPC proxy error',
+        },
+        id: null,
       },
-      502,
+      500,
     )
   }
 })
