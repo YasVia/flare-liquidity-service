@@ -49,3 +49,48 @@ dataApiRoutes.post('/ConvertFiat', async (c) => {
     currency: body.currency ?? 'USD',
   })
 })
+
+
+dataApiRoutes.post('/GetWalletBalances', async (c) => {
+  const body = await c.req.json()
+
+  console.log('GetWalletBalances', body)
+
+  return c.json({
+    balances: [],
+  })
+})
+
+
+dataApiRoutes.post('/ListPools', async (c) => {
+  const body = await c.req.json()
+
+  console.log('ListPools', body)
+
+  return c.json({
+    pools: [],
+  })
+})
+
+
+dataApiRoutes.post('/GetPortfolio', async (c) => {
+  const body = await c.req.json()
+
+  console.log('GetPortfolio', body)
+
+  return c.json({
+    positions: [],
+    balances: [],
+  })
+})
+
+
+dataApiRoutes.post('/ListTransactions', async (c) => {
+  const body = await c.req.json()
+
+  console.log('ListTransactions', body)
+
+  return c.json({
+    transactions: [],
+  })
+})
