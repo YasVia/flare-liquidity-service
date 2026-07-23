@@ -29,6 +29,8 @@ import { multicallCompatRoutes } from './routes/multicallCompat'
 import { poolCreateCompatRoutes } from './routes/poolCreateCompat'
 import { createPositionCompatRoutes } from './routes/createPositionCompat'
 import { rpcRoutes } from './routes/rpc'
+import { unitagRoutes } from './routes/unitag'
+import { notificationRoutes } from './routes/notification'
 
 const app = new Hono()
 
@@ -82,6 +84,15 @@ app.route('/', uniswapLiquidityRoutes)
 app.route('/data.v1.DataApiService', dataApiRoutes)
 app.route('/v1/graphql', graphqlRoutes)
 app.route('/rpc', rpcRoutes)
+app.route(
+  '/uniswap.unitag.v1.UnitagService',
+  unitagRoutes,
+)
+app.route(
+  '/uniswap.notificationservice.v1.NotificationService',
+  notificationRoutes,
+)
+
 app.route('/wallet', tradingRoutes)
 app.route('/uniswap.liquidity.v1.LiquidityService', liquidityCompatRoutes)
 app.route('/uniswap.liquidity.v2.LiquidityService', uniswapLiquidityCompatRoutes)
