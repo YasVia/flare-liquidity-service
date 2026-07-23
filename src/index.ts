@@ -34,6 +34,7 @@ import { amplitudeRoutes } from './routes/amplitude'
 import { rpcRoutes } from './routes/rpc'
 import { unitagRoutes } from './routes/unitag'
 import { notificationRoutes } from './routes/notification'
+import { complianceRoutes } from './routes/compliance'
 
 const app = new Hono()
 
@@ -110,6 +111,11 @@ app.route(
 app.route(
   '/uniswap.notificationservice.v1.NotificationService',
   notificationRoutes,
+)
+
+app.route(
+  '/uniswap.compliancev2service.v1.compliancev2Service',
+  complianceRoutes,
 )
 
 app.route('/wallet', tradingRoutes)
