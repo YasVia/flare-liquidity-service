@@ -31,7 +31,9 @@ rpcRoutes.post('/:chainId', async (c) => {
 
     const text = await response.text()
 
-    console.log('RPC RESPONSE', response.status, text.slice(0, 300))
+    console.log('RPC RESPONSE STATUS', response.status)
+    console.log('RPC RESPONSE BODY LENGTH', text.length)
+    console.log('RPC RESPONSE BODY', text)
 
     return new Response(text, {
       status: response.status,
