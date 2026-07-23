@@ -37,6 +37,15 @@ import { notificationRoutes } from './routes/notification'
 
 const app = new Hono()
 
+app.use('*', cors({
+  origin: [
+    'http://localhost:3000',
+    'https://iranvault.online',
+  ],
+  credentials: true,
+}))
+
+
 app.use(
   '*',
   cors({
