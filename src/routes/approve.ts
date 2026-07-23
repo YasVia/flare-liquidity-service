@@ -9,7 +9,9 @@ approveRoutes.post('/', async (c) => {
     const body = await c.req.json()
 
     const data = buildApproveCalldata({
-      spender: FLARE_CONTRACTS.positionManagerAddress,
+      spender:
+        body.spender ??
+        FLARE_CONTRACTS.positionManagerAddress,
       amount: BigInt(body.amount),
     })
 
