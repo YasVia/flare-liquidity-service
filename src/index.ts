@@ -133,12 +133,14 @@ app.route('/pool-create', poolCreateCompatRoutes)
 app.route('/create-position', createPositionCompatRoutes)
 
 const server = createServer((req, res) => {
-  app.fetch(
-    new Request(`http://${req.headers.host}${req.url}`, {
-      method: req.method,
-      headers: req.headers as HeadersInit,
-    }),
-  ).then(async (response) => {
+  Promise.resolve(
+    app.fetch(
+      new Request(`http://${req.headers.host}${req.url}`, {
+        method: req.method,
+        headers: req.headers as HeadersInit,
+      }),
+    ),
+  ).then(async (response: Response) => {
     res.writeHead(response.status, Object.fromEntries(response.headers))
     res.end(await response.text())
   })
@@ -149,14 +151,14 @@ const wss = new WebSocketServer({
   path: '/ws',
 })
 
-wss.on('connection', (socket) => {
+wss.on('connection', (socket: import('ws').WebSocket) => {
   console.log('WEBSOCKET CONNECTED')
 
   socket.send(JSON.stringify({
     type: 'connected',
   }))
 
-  socket.on('message', (message) => {
+  socket.on('message', (message: import('ws').RawData) => {
     console.log('WS MESSAGE', message.toString())
   })
 
