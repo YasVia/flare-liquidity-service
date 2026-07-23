@@ -39,7 +39,47 @@ graphqlRoutes.post('/', async (c) => {
         })
       }
 
+
+      case 'V3Pool': {
+        const address =
+          body.variables?.address ?? ''
+
+        const chain =
+          body.variables?.chain ?? ''
+
+        if (!address) {
+          return c.json({
+            data: {
+              v3Pool: null,
+            },
+          })
+        }
+
+        return c.json({
+          data: {
+            v3Pool: {
+              id: address,
+              address,
+              protocolVersion: 'V3',
+              feeTier: 3000,
+              token0Supply: 0,
+              token1Supply: 0,
+              txCount: 0,
+              token0: null,
+              token1: null,
+              totalLiquidity: {
+                value: 0,
+              },
+              volume24h: {
+                value: 0,
+              },
+            },
+          },
+        })
+      }
+
       case 'PoolPriceHistory': {
+
         const pool = body.variables?.pool
 
         if (!pool) {
