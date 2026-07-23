@@ -28,6 +28,7 @@ import { poolActionCompatRoutes } from './routes/poolActionCompat'
 import { multicallCompatRoutes } from './routes/multicallCompat'
 import { poolCreateCompatRoutes } from './routes/poolCreateCompat'
 import { createPositionCompatRoutes } from './routes/createPositionCompat'
+import { rpcRoutes } from './routes/rpc'
 
 const app = new Hono()
 
@@ -50,6 +51,8 @@ app.use(
       '_dd-custom-header-graph-ql-operation-type',
       'x-request-source',
       'x-requested-with',
+      'connect-protocol-version',
+      'x-app-version',
       'connect-protocol-version',
       'x-app-version',
     ],
@@ -79,6 +82,7 @@ app.route('/tokens', tokenRoutes)
 app.route('/', uniswapLiquidityRoutes)
 app.route('/data.v1.DataApiService', dataApiRoutes)
 app.route('/v1/graphql', graphqlRoutes)
+app.route('/rpc', rpcRoutes)
 app.route('/wallet', tradingRoutes)
 app.route('/uniswap.liquidity.v1.LiquidityService', liquidityCompatRoutes)
 app.route('/uniswap.liquidity.v2.LiquidityService', uniswapLiquidityCompatRoutes)
