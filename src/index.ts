@@ -46,7 +46,10 @@ app.use(
     allowHeaders: [
       'Content-Type',
       'Authorization',
+      '_dd-custom-header-graph-ql-operation-name',
+      'x-requested-with',
     ],
+    credentials: true,
   }),
 )
 
