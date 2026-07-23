@@ -30,6 +30,7 @@ import { poolCreateCompatRoutes } from './routes/poolCreateCompat'
 import { createPositionCompatRoutes } from './routes/createPositionCompat'
 import { statsigRoutes } from './routes/statsig'
 import { sessionRoutes } from './routes/session'
+import { amplitudeRoutes } from './routes/amplitude'
 import { rpcRoutes } from './routes/rpc'
 import { unitagRoutes } from './routes/unitag'
 import { notificationRoutes } from './routes/notification'
@@ -88,6 +89,7 @@ app.route('/data.v2.DataApiService', dataApiRoutes)
 app.route('/v1/graphql', graphqlRoutes)
 app.route('/v1/statsig-proxy', statsigRoutes)
 app.route('/uniswap.platformservice.v1.SessionService', sessionRoutes)
+app.route('/amplitude', amplitudeRoutes)
 app.route('/rpc', rpcRoutes)
 app.route(
   '/uniswap.unitag.v1.UnitagService',
