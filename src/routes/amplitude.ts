@@ -5,7 +5,8 @@ export const amplitudeRoutes = new Hono()
 amplitudeRoutes.post('*', async (c) => {
   const body = await c.req.text()
 
-  console.log('AMPLITUDE EVENT', body.slice(0, 500))
+  console.log('AMPLITUDE EVENT BODY', body.slice(0, 1000))
+  console.log('AMPLITUDE HEADERS', Object.fromEntries(c.req.raw.headers))
 
   return new Response(
     JSON.stringify({
