@@ -35,7 +35,18 @@ rpcRoutes.post('/:chainId', async (c) => {
     console.log('RPC RESPONSE BODY LENGTH', text.length)
     console.log('RPC RESPONSE BODY', text)
 
-    return new Response(text, {
+    const responseBody =
+      text ||
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id: null,
+        error: {
+          code: -32000,
+          message: 'empty upstream response',
+        },
+      })
+
+    return new Response(responseBody, {
       status: response.status,
       headers: {
         'content-type': 'application/json',
