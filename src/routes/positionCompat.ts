@@ -5,7 +5,12 @@ import { FLARE_CONTRACTS } from '../config/contracts'
 export const positionCompatRoutes = new Hono()
 
 positionCompatRoutes.post('/BuildMint', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const data = buildMintCalldata({
     token0: body.token0,

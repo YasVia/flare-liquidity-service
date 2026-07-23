@@ -9,7 +9,12 @@ function result(query: string) {
 }
 
 tokenRoutes.post('/SearchTokens', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   return c.json({
     tokens: result(
@@ -21,7 +26,12 @@ tokenRoutes.post('/SearchTokens', async (c) => {
 })
 
 tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   return c.json({
     tokens: result(
@@ -33,7 +43,12 @@ tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
 })
 
 tokenRoutes.post('/search', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   return c.json({
     tokens: result(body.query ?? ''),

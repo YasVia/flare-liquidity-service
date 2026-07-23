@@ -8,7 +8,12 @@ export const multicallRoutes = new Hono()
 
 multicallRoutes.post('/', async (c) => {
   try {
-    const body = await c.req.json()
+    let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
     const data = buildMulticallCalldata(
       body.calls,

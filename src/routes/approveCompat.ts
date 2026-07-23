@@ -5,7 +5,12 @@ import { FLARE_CONTRACTS } from '../config/contracts'
 export const approveCompatRoutes = new Hono()
 
 approveCompatRoutes.post('/Approve', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const data = buildApproveCalldata({
     spender: FLARE_CONTRACTS.positionManagerAddress,

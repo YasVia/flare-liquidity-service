@@ -7,7 +7,12 @@ import {
 export const multicallCompatRoutes = new Hono()
 
 multicallCompatRoutes.post('/Multicall', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const data = buildMulticallCalldata(
     body.calls ?? [],

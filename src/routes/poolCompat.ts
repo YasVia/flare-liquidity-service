@@ -5,7 +5,12 @@ import { getPoolState } from '../services/poolStateReader'
 export const poolCompatRoutes = new Hono()
 
 poolCompatRoutes.post('/GetPoolAddress', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const pool = await getPoolAddress(
     body.tokenA,
@@ -19,7 +24,12 @@ poolCompatRoutes.post('/GetPoolAddress', async (c) => {
 })
 
 poolCompatRoutes.post('/GetPoolState', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const state = await getPoolState(
     body.pool ?? body.address,

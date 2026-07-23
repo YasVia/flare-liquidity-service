@@ -6,7 +6,12 @@ export const positionBuildRoutes = new Hono()
 
 positionBuildRoutes.post('/', async (c) => {
   try {
-    const body = await c.req.json()
+    let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
     const data = buildMintCalldata({
       token0: body.token0,

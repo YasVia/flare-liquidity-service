@@ -4,7 +4,12 @@ import { createPosition } from '../services/createPosition'
 export const createPositionCompatRoutes = new Hono()
 
 createPositionCompatRoutes.post('/CreatePosition', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   try {
     const result = await createPosition({

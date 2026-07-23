@@ -5,7 +5,12 @@ import { buildInitializePoolCalldata } from '../services/initializePool'
 export const poolActionCompatRoutes = new Hono()
 
 poolActionCompatRoutes.post('/CreatePool', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   return c.json(
     buildCreatePoolCalldata(
@@ -17,7 +22,12 @@ poolActionCompatRoutes.post('/CreatePool', async (c) => {
 })
 
 poolActionCompatRoutes.post('/InitializePool', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   return c.json({
     ...buildInitializePoolCalldata(

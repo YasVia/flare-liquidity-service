@@ -4,7 +4,12 @@ import { getPoolAddress } from '../services/poolReader'
 export const poolAddressRoutes = new Hono()
 
 poolAddressRoutes.post('/', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const pool = await getPoolAddress(
     body.tokenA,

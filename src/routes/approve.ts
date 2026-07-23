@@ -6,7 +6,12 @@ export const approveRoutes = new Hono()
 
 approveRoutes.post('/', async (c) => {
   try {
-    const body = await c.req.json()
+    let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
     const data = buildApproveCalldata({
       spender:

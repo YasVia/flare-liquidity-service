@@ -4,7 +4,12 @@ import { FLARE_TOKENS } from '../data/tokens'
 export const dataApiRoutes = new Hono()
 
 dataApiRoutes.post('/GetTokenPrices', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   console.log('GetTokenPrices', body)
 
@@ -14,7 +19,12 @@ dataApiRoutes.post('/GetTokenPrices', async (c) => {
 })
 
 dataApiRoutes.post('/GetTokenMetadata', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const addresses = body.tokenAddresses ?? []
 
@@ -26,7 +36,12 @@ dataApiRoutes.post('/GetTokenMetadata', async (c) => {
 })
 
 dataApiRoutes.post('/SearchTokens', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   const q = String(body.query ?? '').toLowerCase()
 
@@ -40,7 +55,12 @@ dataApiRoutes.post('/SearchTokens', async (c) => {
 
 
 dataApiRoutes.post('/ConvertFiat', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   console.log('ConvertFiat', body)
 
@@ -52,7 +72,12 @@ dataApiRoutes.post('/ConvertFiat', async (c) => {
 
 
 dataApiRoutes.post('/GetWalletBalances', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   console.log('GetWalletBalances', body)
 
@@ -63,7 +88,12 @@ dataApiRoutes.post('/GetWalletBalances', async (c) => {
 
 
 dataApiRoutes.post('/ListPools', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   console.log('ListPools', body)
 
@@ -74,7 +104,12 @@ dataApiRoutes.post('/ListPools', async (c) => {
 
 
 dataApiRoutes.post('/GetPortfolio', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   console.log('GetPortfolio', body)
 
@@ -86,7 +121,12 @@ dataApiRoutes.post('/GetPortfolio', async (c) => {
 
 
 dataApiRoutes.post('/ListTransactions', async (c) => {
-  const body = await c.req.json()
+  let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
   console.log('ListTransactions', body)
 

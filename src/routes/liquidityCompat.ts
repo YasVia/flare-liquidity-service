@@ -5,7 +5,12 @@ export const liquidityCompatRoutes = new Hono()
 liquidityCompatRoutes.post(
   '/GetPool',
   async (c) => {
-    const body = await c.req.json()
+    let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
     console.log('GET POOL', body)
 
@@ -18,7 +23,12 @@ liquidityCompatRoutes.post(
 liquidityCompatRoutes.post(
   '/GetPosition',
   async (c) => {
-    const body = await c.req.json()
+    let body = {}
+  try {
+    body = await c.req.json()
+  } catch {
+    console.log('EMPTY JSON BODY', c.req.path)
+  }
 
     console.log('GET POSITION', body)
 
