@@ -4,7 +4,7 @@ import { ensurePool } from '../services/liquidity'
 export const liquidityRoutes = new Hono()
 
 liquidityRoutes.post('/check-pool', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

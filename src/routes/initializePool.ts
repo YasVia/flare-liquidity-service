@@ -4,7 +4,7 @@ import { buildInitializePoolCalldata } from '../services/initializePool'
 export const initializePoolRoutes = new Hono()
 
 initializePoolRoutes.post('/', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

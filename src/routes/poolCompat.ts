@@ -5,7 +5,7 @@ import { getPoolState } from '../services/poolStateReader'
 export const poolCompatRoutes = new Hono()
 
 poolCompatRoutes.post('/GetPoolAddress', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -24,7 +24,7 @@ poolCompatRoutes.post('/GetPoolAddress', async (c) => {
 })
 
 poolCompatRoutes.post('/GetPoolState', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

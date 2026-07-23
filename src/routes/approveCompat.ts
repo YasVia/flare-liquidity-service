@@ -5,7 +5,7 @@ import { FLARE_CONTRACTS } from '../config/contracts'
 export const approveCompatRoutes = new Hono()
 
 approveCompatRoutes.post('/Approve', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

@@ -4,7 +4,7 @@ import { getTicks } from '../services/tickReader'
 export const tickCompatRoutes = new Hono()
 
 tickCompatRoutes.post('/GetTicks', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

@@ -4,7 +4,7 @@ import { buildMintPositionCalldata } from '../services/mintPosition'
 export const mintPositionRoutes = new Hono()
 
 mintPositionRoutes.post('/', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

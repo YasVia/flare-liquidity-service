@@ -4,7 +4,7 @@ import { FLARE_TOKENS } from '../data/tokens'
 export const dataApiRoutes = new Hono()
 
 dataApiRoutes.post('/GetTokenPrices', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -19,7 +19,7 @@ dataApiRoutes.post('/GetTokenPrices', async (c) => {
 })
 
 dataApiRoutes.post('/GetTokenMetadata', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -36,7 +36,7 @@ dataApiRoutes.post('/GetTokenMetadata', async (c) => {
 })
 
 dataApiRoutes.post('/SearchTokens', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -55,7 +55,7 @@ dataApiRoutes.post('/SearchTokens', async (c) => {
 
 
 dataApiRoutes.post('/ConvertFiat', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -72,7 +72,7 @@ dataApiRoutes.post('/ConvertFiat', async (c) => {
 
 
 dataApiRoutes.post('/GetWalletBalances', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -88,7 +88,7 @@ dataApiRoutes.post('/GetWalletBalances', async (c) => {
 
 
 dataApiRoutes.post('/ListPools', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -104,7 +104,7 @@ dataApiRoutes.post('/ListPools', async (c) => {
 
 
 dataApiRoutes.post('/GetPortfolio', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -121,7 +121,7 @@ dataApiRoutes.post('/GetPortfolio', async (c) => {
 
 
 dataApiRoutes.post('/ListTransactions', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

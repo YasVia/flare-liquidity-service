@@ -9,7 +9,7 @@ function result(query: string) {
 }
 
 tokenRoutes.post('/SearchTokens', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -26,7 +26,7 @@ tokenRoutes.post('/SearchTokens', async (c) => {
 })
 
 tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -43,7 +43,7 @@ tokenRoutes.post('/data.v1.SearchService/SearchTokens', async (c) => {
 })
 
 tokenRoutes.post('/search', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

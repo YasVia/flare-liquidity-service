@@ -4,7 +4,7 @@ import { createPosition } from '../services/createPosition'
 export const createPositionRoutes = new Hono()
 
 createPositionRoutes.post('/', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

@@ -5,7 +5,7 @@ import { quoteExactInputSingle } from '../services/quote'
 export const tradingRoutes = new Hono()
 
 tradingRoutes.post('/check_delegation', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
@@ -35,7 +35,7 @@ tradingRoutes.post('/check_delegation', async (c) => {
 
 
 tradingRoutes.post('/quote', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {

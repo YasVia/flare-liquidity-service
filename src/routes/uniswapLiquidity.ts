@@ -5,7 +5,7 @@ export const uniswapLiquidityRoutes = new Hono()
 
 async function handleCreatePosition(c: any) {
   try {
-    let body = {}
+    let body: any = {}
   try {
     body = await c.req.json()
   } catch {

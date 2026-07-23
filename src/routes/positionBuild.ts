@@ -6,7 +6,7 @@ export const positionBuildRoutes = new Hono()
 
 positionBuildRoutes.post('/', async (c) => {
   try {
-    let body = {}
+    let body: any = {}
   try {
     body = await c.req.json()
   } catch {

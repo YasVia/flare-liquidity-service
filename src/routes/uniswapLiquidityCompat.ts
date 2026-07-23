@@ -6,7 +6,7 @@ export const uniswapLiquidityCompatRoutes = new Hono()
 uniswapLiquidityCompatRoutes.post(
   '/CreatePosition',
   async (c) => {
-    let body = {}
+    let body: any = {}
   try {
     body = await c.req.json()
   } catch {

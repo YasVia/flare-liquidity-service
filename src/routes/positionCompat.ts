@@ -5,7 +5,7 @@ import { FLARE_CONTRACTS } from '../config/contracts'
 export const positionCompatRoutes = new Hono()
 
 positionCompatRoutes.post('/BuildMint', async (c) => {
-  let body = {}
+  let body: any = {}
   try {
     body = await c.req.json()
   } catch {
