@@ -155,7 +155,6 @@ const server = createServer((req, res) => {
 
 const wss = new WebSocketServer({
   server,
-  path: '/ws',
 })
 
 wss.on('connection', (socket: import('ws').WebSocket) => {
