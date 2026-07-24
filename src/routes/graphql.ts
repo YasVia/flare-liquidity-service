@@ -33,7 +33,9 @@ graphqlRoutes.post('/', async (c) => {
 
     const operationName = body.operationName ?? ''
     
-    console.log('GRAPHQL', operationName)
+    console.log('GRAPHQL OPERATION', operationName)
+    console.log('GRAPHQL VARIABLES', JSON.stringify(body.variables ?? {}, null, 2))
+    console.log('GRAPHQL QUERY', body.query ?? '')
 
     switch (operationName) {
       case 'SearchTokens': {
