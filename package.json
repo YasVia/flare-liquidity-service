@@ -1,0 +1,28 @@
+{
+  "name": "flare-liquidity-service",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^26.1.1",
+    "@types/ws": "^8.18.1"
+  },
+  "peerDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.11",
+    "@uniswap/sdk-core": "^7.18.0",
+    "@uniswap/v3-sdk": "^3.31.0",
+    "dotenv": "^17.4.2",
+    "hono": "^4.12.31",
+    "viem": "^2.55.4",
+    "ws": "^8.21.1"
+  },
+  "scripts": {
+    "start": "bun src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "bun build src/index.ts --outdir dist --target bun"
+  }
+}
