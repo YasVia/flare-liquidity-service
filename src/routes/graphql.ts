@@ -146,10 +146,25 @@ graphqlRoutes.post('/', async (c) => {
         })
       }
 
-      default:
+      default: {
+        console.log('GRAPHQL UNKNOWN OPERATION', operationName)
+
         return c.json({
-          data: {},
+          data: {
+            token: null,
+            tokens: [],
+            pool: null,
+            pools: [],
+            v3Pool: null,
+            positions: [],
+            portfolio: {
+              positions: [],
+              balances: [],
+            },
+            account: null,
+          },
         })
+      }
     }
   } catch (error) {
     return c.json(
