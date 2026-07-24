@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { FLARE_TOKENS } from '../data/tokens'
+import { flareClient } from '../services/flareClient'
 
 export const dataApiRoutes = new Hono()
 
@@ -13,8 +14,16 @@ dataApiRoutes.post('/GetTokenPrices', async (c) => {
 
   console.log('GetTokenPrices', body)
 
+  const tokens = body.tokenAddresses ?? []
+
+  const prices = tokens.map((address: string) => ({
+    address,
+    price: '0',
+    currency: 'USD',
+  }))
+
   return c.json({
-    prices: [],
+    prices,
   })
 })
 
@@ -81,8 +90,54 @@ dataApiRoutes.post('/GetWalletBalances', async (c) => {
 
   console.log('GetWalletBalances', body)
 
+  const address = body.walletAddress ?? body.address
+
+  if (!address) {
+    return c.json({
+      balances: [],
+    })
+  }
+
+  const balances = []
+
+  for (const token of FLARE_TOKENS) {
+    try {
+      const balance = await flareClient.readContract({
+        address: token.address,
+        abi: [
+          {
+            type: 'function',
+            name: 'balanceOf',
+            stateMutability: 'view',
+            inputs: [
+              {
+                name: 'account',
+                type: 'address',
+              },
+            ],
+            outputs: [
+              {
+                type: 'uint256',
+              },
+            ],
+          },
+        ],
+        functionName: 'balanceOf',
+        args: [address],
+      })
+
+      balances.push({
+        token,
+        balance: balance.toString(),
+      })
+
+    } catch {
+      continue
+    }
+  }
+
   return c.json({
-    balances: [],
+    balances,
   })
 })
 
