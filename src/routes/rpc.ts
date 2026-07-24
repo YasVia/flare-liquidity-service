@@ -14,6 +14,11 @@ rpcRoutes.post('/:chainId', async (c) => {
 
     console.log('RPC REQUEST', c.req.path, body)
 
+    try {
+      const parsed = JSON.parse(body)
+      console.log('RPC METHOD', parsed.method)
+    } catch {}
+
     const response = await fetch(
       'https://flare-api.flare.network/ext/C/rpc',
       {
