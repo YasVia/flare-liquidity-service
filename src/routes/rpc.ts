@@ -34,6 +34,20 @@ rpcRoutes.post('/:chainId', async (c) => {
     console.log('RPC RESPONSE STATUS', response.status)
     console.log('RPC RESPONSE JSON', json)
 
+    if (json === null) {
+      return c.json(
+        {
+          jsonrpc: '2.0',
+          id: null,
+          error: {
+            code: -32000,
+            message: 'upstream returned null',
+          },
+        },
+        502,
+      )
+    }
+
     return c.json(json, response.status as any)
   } catch (error) {
     console.error('RPC ERROR', error)
